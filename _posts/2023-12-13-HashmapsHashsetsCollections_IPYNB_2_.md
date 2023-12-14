@@ -583,7 +583,9 @@ TreeSetExample.main(null);
 
 SQL is a programming language focused on managing and manipulating relational (table-based) databases. It acts as the backbone for many of this class's project backends, allowing users to create, read, update and delete data efficiently. To get a better idea of how data is formatted with JPA to be stored in an SQL database, we'll be looking at the `Person` object in the lesson backend. Follow along in this notebook.
 
-### Person Model File Setup
+### Person Object Setup
+
+(see .../mvc/person/Person.java)
 
 After the first three tags, which specify to Lombok that `@AllArgsConstructor` and `@NoArgsConstructor` methods should be created
 
@@ -608,7 +610,49 @@ The `@Id` tag specifies to that this value will be used as the unique identifier
 private Long id;
 ```
 
+### Person JPA Repository Setup
+
+(see .../mvc/person/PersonJpaRepository.java)
+
+JPA is a great asset when creating an SQL database because it can provide methods that help you modify its contents. If a specific object has a `JpaRepository` interface made that extends the base JPA repository, it allows you to access many useful JPA methods.
+
+
+```Java
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+//...
+
+public interface PersonJpaRepository extends JpaRepository<Person, Long> // ...
+```
+
+#### Popcorn Hack!
+
+List all of the JPA methods that you see in the PersonJpaRepository.java file and what their purpose is.
+
+#### Custom JPA Queries
+
+You can create custom JPA queries that utilize SQL to serve a specific purpose outside of the existing JPA methods. See the example below from PersonJpaRepository.java:
+
+
+```Java
+@Query(
+        value = "SELECT * FROM Person p WHERE p.name LIKE ?1 or p.email LIKE ?1",
+        nativeQuery = true)
+List<Person> findByLikeTermNative(String term);
+```
+
+Going step-by-step:
+- The `@Query` indicates a custom query is being created
+- `value` is a String containing an SQL query that will be run with the method `findByLikeTermNative`
+    - `?1` is a placeholder for a parameter (in this case the String `term` from the method declaration)
+- `nativeQuery` is set to true, indicating that the value uses native SQL rather than JPQL (Java Persistence Query Language)
+
+Using a custom SQL query like this would be a great way to show understanding on the homework.
+
 ### Many-to-Many Relationship
+
+(see .../mvc/person/Person.java)
 
 A "Many-to-Many" relationship (shown in the @ManyToMany tag) indicates that entities on both sides of a relationship can have multiple connections with each other.
 
@@ -680,4 +724,9 @@ You can view the way this data is structured in the `person` sqlite.db table.
 - Using the [Person](https://github.com/Tirth-Thakkar/LessonBackend/tree/master/src/main/java/com/nighthawk/spring_portfolio/mvc/person) object as inspiration, create your own UNIQUE SQL database with at least 3 object entries that incorporates either a "many-to-many" relationship with another object (hint: Person and PersonRole) OR uses the JSONB column definition to store more complex data (such as a HashMap) as an attribute (hint: stats in Person object).
     - Show a clear screenshot of your SQLite table (using SQLite viewer) on your blog for credit.
     - Using past group project materials is valid for this homework as long as the expectations are met.
-    - Incorporating both looks great for grading. Having working CRUD methods would also be extra.
+
+### Ideas for 1.0/1.0
+
+- Incorporating both a "many-to-many" relationship and a JSONB column with information would be great.
+- Implementing JPA repository methods (think CRUD methods, custom queries, etc.) would show interest in modifying SQL database data.
+- Take extra notes on this lesson that show deeper research into Collections and SQL.
