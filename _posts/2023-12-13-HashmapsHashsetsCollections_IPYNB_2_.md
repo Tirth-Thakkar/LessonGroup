@@ -581,7 +581,7 @@ TreeSetExample.main(null);
 
 ## SQL
 
-SQL is a programming language focused on managing and manipulating relational (table-based) databases. It acts as the backbone for many of this class's project backends, allowing users to create, read, update and delete data efficiently. To get a better idea of how data is formatted with JPA to be stored in an SQL database, we'll be looking at the `Person` object in the lesson backend. Follow along in this notebook.
+SQL is a programming language focused on managing and manipulating relational (table-based) databases. It acts as the backbone for many of this class's project backends, allowing users to create, read, update and delete data efficiently. To get a better idea of how data is formatted with JPA to be stored in an SQL database, we'll be looking at the `Person` object in the [lesson backend](https://github.com/Tirth-Thakkar/LessonBackend). Follow along in this notebook.
 
 ### Person Object Setup
 
@@ -621,7 +621,7 @@ JPA is a great asset when creating an SQL database because it can provide method
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-//...
+// ...
 
 public interface PersonJpaRepository extends JpaRepository<Person, Long> // ...
 ```
